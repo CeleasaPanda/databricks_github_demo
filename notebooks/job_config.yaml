@@ -1,5 +1,5 @@
 job:
-  name: dpk_job
+  name: cp_job
 
   tasks:
     - task_key: ingest_task
