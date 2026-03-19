@@ -1,0 +1,34 @@
+name: Databricks Bundle Deploy
+
+on:
+push:
+branches:
+- main
+
+jobs:
+Deploy:
+runs-on: ubuntu-latest
+
+```
+steps:
+  # Step 1: Checkout repository
+  - name: Checkout Repo
+    uses: actions/checkout@v4
+
+  # Step 2: Install Databricks CLI
+  - name: Install Databricks CLI
+    run: |
+      curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+
+  # Step 3: Deploy Databricks Bundle
+  - name: Deploy Bundle
+    env:
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
+      DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
+      DATABRICKS_TENANT_ID: ${{ secrets.DATABRICKS_TENANT_ID }}
+    run: |
+      databricks bundle summary -t dev
+      databricks bundle validate
+      databricks bundle deploy -t dev
+```
