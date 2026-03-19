@@ -1,0 +1,13 @@
+job:
+  name: dpk_job
+
+  tasks:
+    - task_key: ingest_task
+      notebook_path: /Workspace/Users/celeasa@prisoft.com/databricks_github_demo/Ingestion Notebook for Git
+      primary_keys: ["order_id"]
+      timestamp_column: "updated_at"
+
+    - task_key: transform_task
+      notebook_path: /Workspace/Users/celeasa@prisoft.com/databricks_github_demo/Transformation Notebook For Git
+      depends_on:
+        - ingest_task
